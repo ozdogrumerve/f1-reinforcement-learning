@@ -23,15 +23,14 @@ class SensorSystem:
     def _cast_ray(self, x, y, angle_rad, track):
         cos_a = math.cos(angle_rad)
         sin_a = math.sin(angle_rad)
-
-        for dist in range(1, SENSOR_MAX_RANGE + 1):
+        
+        # 1'er piksel yerine 3'er piksel atla → 3x hızlı
+        for dist in range(1, SENSOR_MAX_RANGE + 1, 3):
             px = x + cos_a * dist
             py = y + sin_a * dist
-
             if not track.is_on_track(px, py):
                 return dist, (px, py)
 
-        # Duvara çarpmadı, max mesafe
         end_x = x + cos_a * SENSOR_MAX_RANGE
         end_y = y + sin_a * SENSOR_MAX_RANGE
         return SENSOR_MAX_RANGE, (end_x, end_y)

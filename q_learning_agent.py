@@ -10,21 +10,21 @@ from config import (
 # Sensör mesafelerini 3 kategoriye ayır
 def discretize(value):
     """0.0-1.0 arası normalize değeri 3 kategoriye çevirir."""
-    if value < 0.25:
-        return 0   # yakın (tehlikeli)
-    elif value < 0.6:
+    if value < 0.2:
+        return 0   # çok yakın
+    elif value < 0.5:
         return 1   # orta
     else:
-        return 2   # uzak (güvenli)
+        return 2   # uzak
 
 def discretize_speed(value):
     """Hızı 3 kategoriye çevirir."""
-    if value < 0.15:
-        return 0   # yavaş / durgun
-    elif value < 0.5:
-        return 1   # orta hız
+    if value < 0.1:
+        return 0    # yavaş / durgun
+    elif value < 0.4:
+        return 1     # orta hız
     else:
-        return 2   # hızlı
+        return 2    # hızlı
 
 class QLearningAgent:
     def __init__(self, action_count=5):
@@ -87,7 +87,11 @@ class QLearningAgent:
 
     # ── Yükle ─────────────────────────────────────────
     def load(self, filename="q_table.pkl"):
-        path = os.path.join(MODEL_DIR, filename)
+        if os.path.dirname(filename):
+            path = filename
+        else:
+            path = os.path.join(MODEL_DIR, filename)
+            
         if not os.path.exists(path):
             print(f"⚠️  Model bulunamadı: {path}")
             return False

@@ -36,8 +36,8 @@ class Track:
         # ── Başlangıç pozisyonu ve açısı ───────────────
         self.start_x     = 490
         self.start_y     = 120
-        self.start_angle = 90   # yukarı bakıyor
-
+        self.start_angle = 0  
+        
         # ── Renkler ────────────────────────────────────
         self.color_track      = (60,  60,  60)   # gri asfalt
         self.color_outer      = (30,  30,  30)   # koyu gri dış
@@ -70,11 +70,14 @@ class Track:
 
     # ── Çarpışma kontrolü ──────────────────────────────
     def is_on_track(self, x, y):
+        # Önce basit rect kontrolü yap, polygon pahalı
+        if x < 50 or x > 950 or y < 50 or y > 650:
+            return False
         return (
             self._point_in_polygon(x, y, self.outer_wall) and
             not self._point_in_polygon(x, y, self.inner_wall)
         )
-
+    
     def check_corners(self, corners):
         """Arabanın 4 köşesinden herhangi biri pist dışındaysa True döner."""
         for (cx, cy) in corners:
