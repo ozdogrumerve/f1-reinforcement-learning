@@ -18,6 +18,11 @@ def evaluate(model_file="q_table_best.pkl", episodes=5):
     # Değerlendirme modunda epsilon = 0 (rastgele hareket yok)
     agent.epsilon = 0.0
 
+    # Müzik
+    pygame.mixer.init()
+    pygame.mixer.music.load("assets/tokyo_drift.mp3")
+    pygame.mixer.music.play(-1)  # sonsuz döngü
+
     font = pygame.font.SysFont("Arial", 18)
 
     print(f"\n🏁 Değerlendirme başlıyor — {episodes} episode")
