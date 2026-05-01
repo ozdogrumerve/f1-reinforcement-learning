@@ -13,7 +13,7 @@
 ## 🎬 Demo
 
 <p align="center">
-  <img src="Assets/record.gif" width="700"/>
+  <img src="Assets/record.gif" width="500"/>
 </p>
 
 ## 📖 Overview
