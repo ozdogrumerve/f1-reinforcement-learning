@@ -2,9 +2,9 @@
 
 <div align="center">
 
-[![GitHub stars](https://img.shields.io/github/stars/ozdogrumerve/f1-reinforcement-learning?style=for-the-badge)](https://github.com/zeynpakn/f1-reinforcement-learning/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/ozdogrumerve/f1-reinforcement-learning?style=for-the-badge)](https://github.com/zeynpakn/f1-reinforcement-learning/network)
-[![GitHub issues](https://img.shields.io/github/issues/ozdogrumerve/f1-reinforcement-learning?style=for-the-badge)](https://github.com/zeynpakn/f1-reinforcement-learning/issues)
+[![GitHub stars](https://img.shields.io/github/stars/zeynpakn/f1-reinforcement-learning?style=for-the-badge)](https://github.com/zeynpakn/f1-reinforcement-learning/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/zeynpakn/f1-reinforcement-learning?style=for-the-badge)](https://github.com/zeynpakn/f1-reinforcement-learning/network)
+[![GitHub issues](https://img.shields.io/github/issues/zeynpakn/f1-reinforcement-learning?style=for-the-badge)](https://github.com/zeynpakn/f1-reinforcement-learning/issues)
 
 **Train an intelligent agent to master the art of Formula 1 racing through Q-Learning in a simulated 2D environment.**
 
@@ -43,6 +43,7 @@ This project is ideal for students and researchers interested in:
 ![NumPy](https://img.shields.io/badge/NumPy-1.26.4-purple?style=for-the-badge&logo=numpy&logoColor=white) 
 ![Pygame](https://img.shields.io/badge/Pygame-2.5.2-green?style=for-the-badge&logo=python&logoColor=white) 
 ![Matplotlib](https://img.shields.io/badge/Matplotlib-3.8.4-red?style=for-the-badge&logo=matplotlib&logoColor=white) 
+![Pandas](https://img.shields.io/badge/Pandas-2.2.2-150458?style=for-the-badge&logo=pandas&logoColor=white)
 
 </div>
 
@@ -51,6 +52,7 @@ This project is ideal for students and researchers interested in:
 
 **Machine Learning & Data Science:**
 *   Numpy: Numerical computing for arrays and mathematical operations
+*   Pandas: Training log parsing and rolling average computation for plots
 
 **Simulation & Visualization:**
 *   Pygame: 2D game development library for creating the simulation environment
@@ -63,13 +65,15 @@ f1-reinforcement-learning/
 ├── .gitignore               # Specifies intentionally untracked files to ignore
 ├── __pycache__/             # Python bytecode cache
 ├── models/                  # Directory for saving trained RL models (e.g., Q-tables)
+├── logs/                    # Training logs (training_log.csv, training_plots.png)
 ├── car.py                   # Implements the F1 car agent's physics and state
 ├── config.py                # Centralized configuration parameters for the simulation and RL agent
 ├── environment.py           # Defines the 2D racing environment, state transitions, and reward system
-├── evaluate.py              # (Empty) Placeholder for model evaluation script
+├── evaluate.py              # Loads best model and runs visual evaluation episodes
 ├── main.py                  # Main entry point for running the simulation and training the agent
-├── plots.py                 # (Empty) Placeholder for data plotting and visualization utilities
+├── plots.py                 # Generates 4-panel training analysis charts from training_log.csv
 ├── q_learning_agent.py      # Implements the Q-Learning algorithm and agent logic
+├── train.py                 # Headless training loop: runs episodes, saves checkpoints and logs
 ├── requirements.txt         # Lists all Python dependencies
 ├── sensor.py                # Defines the car's sensor system for environment perception
 ├── test_env.py              # Contains unit tests for the environment setup and logic
@@ -130,6 +134,22 @@ Runs **2,000 episodes** in headless mode (no rendering = maximum speed). The age
 - Saves a checkpoint every **100 episodes** → `models/q_table_ep{N}.pkl`
 - Automatically keeps the **best model** ever → `models/q_table_best.pkl`
 - Full training log → `logs/training_log.csv`
+
+### Plotting — Visualize Training Progress
+
+```bash
+python plots.py
+```
+
+Reads `logs/training_log.csv` and saves a 4-panel chart to `logs/training_plots.png`:
+
+| Panel | Description |
+|-------|-------------|
+| **Episode → Total Reward** | Raw reward per episode with 50-episode moving average and baseline |
+| **Episode → Survival Steps** | Steps survived per episode with moving average and filled area |
+| **Episode → Max Checkpoint** | Bar chart of the furthest checkpoint reached each episode |
+| **Epsilon Decay** | Exploration rate curve from 1.0 (exploration) to ~0.1 (exploitation) |
+
 ### Evaluation — Watch It Drive
  
 ```bash
