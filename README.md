@@ -10,10 +10,11 @@
 
 </div>
 
-## 🖥️ Screenshots
+## 🎬 Demo
 
-<!-- TODO: Add actual screenshots of the simulation and possibly training/evaluation plots. -->
-_Screenshots coming soon!_
+<p align="center">
+  <img src="Assets/record.gif" width="700"/>
+</p>
 
 ## 📖 Overview
 
